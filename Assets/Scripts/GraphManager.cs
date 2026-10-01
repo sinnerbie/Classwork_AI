@@ -47,7 +47,21 @@ public class GraphManager : MonoBehaviour
 
     public bool IsCycle(GraphNode[] path)
     {
-        return false;
+        int i = 0;
+        for (int j = 0; j < path.Length; j++)
+        {
+            foreach (GraphEdge e in path[j].edges)
+            {
+                if (j != path.Length - 1)
+                    { if (e.destination == path[j + 1]) i++; }
+                else
+                    if (e.destination == path[0]) i++;
+            }
+        }
+        if (i == path.Length + 1)
+            return true;
+        else
+            return false;
     }
 
     #region Algorithms
@@ -102,7 +116,7 @@ public class GraphManager : MonoBehaviour
     #endregion
 
     #region Notes
-    // BFS = Breadth First Search, travels to all vertices connected to a given source to find the path with the leas edges
+    // BFS = Breadth First Search, travels to all vertices connected to a given source to find the path with the least edges
     // FIFO = First In First Out in a queue
     /* DFS = Depth First Search, travels to all vertices connected to a given source in depth, goes to the end of any path and checks
      alternate routes retroactivly */
